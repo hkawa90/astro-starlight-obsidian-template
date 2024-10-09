@@ -1,36 +1,167 @@
 ---
-title: Welcome to Starlight
-description: Get started building your docs site with Starlight.
-template: splash
-hero:
-  tagline: Congrats on setting up a new Starlight project!
-  image:
-    file: ../../assets/houston.webp
-  actions:
-    - text: Example Guide
-      link: /guides/example/
-      icon: right-arrow
-    - text: Read the Starlight docs
-      link: https://starlight.astro.build
-      icon: external
-      variant: minimal
+title: Welcome to Starlight Trial Site
 ---
 
-import { Card, CardGrid } from '@astrojs/starlight/components';
+# [Astro](https://astro.build/)の[Starlight](https://starlight.astro.build/) themeを試す
 
-## Next steps
+Obsidianで作成していたMarkdownをsiteで公開できるようにしてみた。
 
-<CardGrid stagger>
-	<Card title="Update content" icon="pencil">
-		Edit `src/content/docs/index.mdx` to see this page change.
-	</Card>
-	<Card title="Add new content" icon="add-document">
-		Add Markdown or MDX files to `src/content/docs` to create new pages.
-	</Card>
-	<Card title="Configure your site" icon="setting">
-		Edit your `sidebar` and other config in `astro.config.mjs`.
-	</Card>
-	<Card title="Read the docs" icon="open-book">
-		Learn more in [the Starlight Docs](https://starlight.astro.build/).
-	</Card>
-</CardGrid>
+# Demo
+
+https://hkawa90.github.io/astro-starlight-trial/　を見てください。
+
+サイドバーの`Notes`以降がObsidianから生成されたものです。
+
+# Feature of [Starlight](https://starlight.astro.build/) theme
+
+- buildするだけで`pagefind`で検索できるようになります。
+- [HiDeoo/starlight-obsidian](https://github.com/HiDeoo/starlight-obsidian) plugin導入でほぼ`obsidian`と同様な表示となる。
+
+# Requirement
+
+- Obsidianの`vaults`
+- favicon.svg
+  faviconファイルを`SVG`で用意しておきます。
+
+ローカルで`preview`したい人は、
+
+- node.js
+- npm/pnpmなどのpackage manager
+
+# Configuration
+
+設定自体は`astro.config.mjs`の変更だけで済みます。ここではObsidianのvalutsを`./MyDoc`に置いておきます。
+
+```js
+// @ts-check
+import { defineConfig } from 'astro/config';
+import starlight from '@astrojs/starlight';
+import starlightObsidian, { obsidianSidebarGroup } from 'starlight-obsidian';
+
+// https://astro.build/config
+export default defineConfig({
+	site: 'https://hkawa90.github.io',
+	base: 'astro-starlight-trial',
+	integrations: [
+		starlight({
+			plugins: [
+				// Generate the Obsidian vault pages.
+				starlightObsidian({
+					vault: './MyDoc/',
+				}),
+                        ],
+			title: 'My Docs',
+                        // pagefindで日本語で検索できるようにするためlocaleを設定する
+			locales: {
+                                 root: {
+					label: 'Japanese',
+					lang: 'ja',
+				},
+			},
+			social: {
+				github: 'https://github.com/hkawa90/astro-starlight-trial',
+			},
+			sidebar: [
+				{
+					label: 'Guides',
+					items: [
+						// Each item here is one entry in the navigation menu.
+						{ label: 'Example Guide', slug: 'guides/example' },
+					],
+				},
+				{
+					label: 'Reference',
+					autogenerate: { directory: 'reference' },
+				},
+				// Add the generated sidebar group to the sidebar.
+				obsidianSidebarGroup,
+			],
+		}),
+	],
+});
+
+```
+
+Github Pagesへdeployするための`deploy.yml`。ここは公式の内容とは異なります。これは`Mermaid`のDiagram作成に`playwright`を使っているため、そのインストールが必要なためです。
+
+```
+name: Deploy to GitHub Pages
+
+on:
+  # Trigger the workflow every time you push to the `main` branch
+  # Using a different branch name? Replace `main` with your branch’s name
+  push:
+    branches: [ main ]
+  # Allows you to run this workflow manually from the Actions tab on GitHub.
+  workflow_dispatch:
+
+# Allow this job to clone the repo and create a page deployment
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout your repository using git
+        uses: actions/checkout@v4
+
+      - name: Install Node.js
+        uses: actions/setup-node@v4.0.2
+        with:
+          node-version: 20
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9
+      - name: Install packages
+        run: pnpm install
+
+      - name: Install Playwright Browsers
+        run: pnpx playwright install --with-deps chromium
+
+      - name: Build
+        run: pnpm run build
+
+      - name: Upload Pages Artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: "./dist/"
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+
+```
+
+import { FileTree } from '@astrojs/starlight/components';
+
+下記の`public/favicon.svg`を用意してあったものと入れ変えます。またトップページとなる`src/content/docs/index.mdx`を変更します。
+
+<FileTree>
+
+- MyDoc/
+- README.md
+- astro.config.mjs
+- package.json
+- node_modules
+- public/
+  - favicon.svg
+  - notes/
+- src/
+  - assets/
+  - content/
+    - docs/
+      - index.mdx
+
+</FileTree>

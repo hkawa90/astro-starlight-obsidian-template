@@ -1,27 +1,41 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
 import starlight from '@astrojs/starlight';
+import starlightObsidian, { obsidianSidebarGroup } from 'starlight-obsidian';
+
+// import env
+const siteName = import.meta.env.CONFIG_SITE_NAME;
+const baseName = import.meta.env.CONFIG_BASE_NAME;
+const vaultName = import.meta.env.CONFIG_VAULT_NAME;
+const titleName = import.meta.env.CONFIG_TITLE_NAME;
+
 
 // https://astro.build/config
 export default defineConfig({
+	site: siteName,
+	base: baseName,
 	integrations: [
 		starlight({
-			title: 'My Docs',
-			social: {
-				github: 'https://github.com/withastro/starlight',
+			plugins: [
+				// Generate the Obsidian vault pages.
+				starlightObsidian({
+					vault: vaultName,
+				}),
+                        ],
+			title: titleName,
+                        // pagefindで日本語で検索できるようにするためlocaleを設定する
+			locales: {
+                                 root: {
+					label: 'Japanese',
+					lang: 'ja',
+				},
 			},
+//			social: {
+//				github: 'https://github.com/hkawa90/astro-starlight-trial',
+//			},
 			sidebar: [
-				{
-					label: 'Guides',
-					items: [
-						// Each item here is one entry in the navigation menu.
-						{ label: 'Example Guide', slug: 'guides/example' },
-					],
-				},
-				{
-					label: 'Reference',
-					autogenerate: { directory: 'reference' },
-				},
+				// Add the generated sidebar group to the sidebar.
+				obsidianSidebarGroup,
 			],
 		}),
 	],

@@ -1,55 +1,86 @@
-# Starlight Starter Kit: Basics
+# Obsidianで作成したドキュメントを[Astro](https://astro.build/)の[Starlight](https://starlight.astro.build/) themeで公開する
 
-[![Built with Starlight](https://astro.badg.es/v2/built-with-starlight/tiny.svg)](https://starlight.astro.build)
+Obsidianで作成していたMarkdownをsiteで公開できるようにテンプレートにしてみた。
+
+# Demo
+
+https://hkawa90.github.io/astro-starlight-obsidian-trial/
+
+# Feature
+
+- templateからsiteをGitHub Pagesで公開できます。
+- buildするだけで`pagefind`で検索できるようになります。
+- [HiDeoo/starlight-obsidian](https://github.com/HiDeoo/starlight-obsidian) plugin導入でほぼ`obsidian`と同様な表示となる。
+
+# Requirement
+
+- Obsidianの`vaults`のみをgithubに入れておいたもの
+- favicon.svg
+  faviconファイルを`SVG`で用意しておきます。
+ENVironment設定しておく
+USER_NAME       xxx
+REPOSITORY	xxx
+VAULT		xxx
+TITLE		xxx
+VLT_REPOSITORY	xxx
+
+
+
+ローカルで`preview`したい人は、
+
+- node.js
+- npm/pnpmなどのpackage manager
+
+# Configuration
+
+設定自体は`astro.config.mjs`の変更だけで済みます。
+
+```js
+// @ts-check
+import { defineConfig } from 'astro/config';
+import starlight from '@astrojs/starlight';
+import starlightObsidian, { obsidianSidebarGroup } from 'starlight-obsidian';
+
+// https://astro.build/config
+export default defineConfig({
+	site: 'https://hkawa90.github.io',
+	base: 'astro-starlight-trial',
+	integrations: [
+		starlight({
+			plugins: [
+				// Generate the Obsidian vault pages.
+				starlightObsidian({
+					vault: './MyDoc/',
+				}),
+                        ],
+			title: 'My Docs',
+                        // pagefindで日本語で検索できるようにするためlocaleを設定する
+			locales: {
+                                 root: {
+					label: 'Japanese',
+					lang: 'ja',
+				},
+			},
+			social: {
+				github: 'https://github.com/hkawa90/astro-starlight-trial',
+			},
+			sidebar: [
+				{
+					label: 'Guides',
+					items: [
+						// Each item here is one entry in the navigation menu.
+						{ label: 'Example Guide', slug: 'guides/example' },
+					],
+				},
+				{
+					label: 'Reference',
+					autogenerate: { directory: 'reference' },
+				},
+				// Add the generated sidebar group to the sidebar.
+				obsidianSidebarGroup,
+			],
+		}),
+	],
+});
 
 ```
-npm create astro@latest -- --template starlight
-```
-
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/withastro/starlight/tree/main/examples/basics)
-[![Open with CodeSandbox](https://assets.codesandbox.io/github/button-edit-lime.svg)](https://codesandbox.io/p/sandbox/github/withastro/starlight/tree/main/examples/basics)
-[![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/withastro/starlight&create_from_path=examples/basics)
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fwithastro%2Fstarlight%2Ftree%2Fmain%2Fexamples%2Fbasics&project-name=my-starlight-docs&repository-name=my-starlight-docs)
-
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
-
-## 🚀 Project Structure
-
-Inside of your Astro + Starlight project, you'll see the following folders and files:
-
-```
-.
-├── public/
-├── src/
-│   ├── assets/
-│   ├── content/
-│   │   ├── docs/
-│   │   └── config.ts
-│   └── env.d.ts
-├── astro.config.mjs
-├── package.json
-└── tsconfig.json
-```
-
-Starlight looks for `.md` or `.mdx` files in the `src/content/docs/` directory. Each file is exposed as a route based on its file name.
-
-Images can be added to `src/assets/` and embedded in Markdown with a relative link.
-
-Static assets, like favicons, can be placed in the `public/` directory.
-
-## 🧞 Commands
-
-All commands are run from the root of the project, from a terminal:
-
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
-
-## 👀 Want to learn more?
-
-Check out [Starlight’s docs](https://starlight.astro.build/), read [the Astro documentation](https://docs.astro.build), or jump into the [Astro Discord server](https://astro.build/chat).
