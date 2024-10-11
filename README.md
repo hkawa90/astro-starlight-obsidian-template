@@ -84,3 +84,7 @@ export default defineConfig({
 	},
 	integrations: [
 ```
+
+## サイト構築の手順
+
+工事中。
