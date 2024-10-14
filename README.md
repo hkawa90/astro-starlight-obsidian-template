@@ -40,8 +40,12 @@ https://hkawa90.github.io/astro-starlight-obsidian-template/
 (2) `Name`に`TITLE`を入力して、`Value`にサイトのタイトルを入力します。
 (3) `Name`に`VAULT`を入力して、`Value`に`MYVAULT`を入力します(将来的にはなくす方向)。
 ![](img/Add-Environment-variable.png)
-10. すべての変数を入力した状態です。
+
 ![](img/Add-Variable.png)
+
+10. すべての変数を入力した状態です。
+![](img/Added-Variables.png)
+
 11. `Pages`を選択します。
 ![](img/Settings-Pages.png)
 12. `Build and deployment`項目の`branch`で`None`プルダウンから`main`を選択して、`Save`ボタンをクリック
@@ -75,7 +79,7 @@ Githubの`Environment`で変数名を設定するだけです(実例はあとで
 - 環境名productionの変数名 TITLE
 	サイトのタイトルを入力します。
 
-トップページを`Obsidian`のWelcomeページにする場合は、以下の`astro.config.mjs`ファイルの
+作成する`Site`のトップページを`Obsidian`のWelcomeページにする場合は、`astro.config.mjs`ファイルで
 
 ```js
 // https://astro.build/config
@@ -114,7 +118,7 @@ export default defineConfig({
 });
 ```
 
-次のように`//`を削除してください。`notes/welcome`をほかのページのurlに変更すれば、それがトップぺーじになります。
+次のように`//`(コメント)を削除してください。`notes/welcome`をほかのページのurlに変更すれば、それがトップぺーじになります。
 
 ```js
 export default defineConfig({
@@ -127,6 +131,3 @@ export default defineConfig({
 	integrations: [
 ```
 
-## サイト構築の手順
-
-工事中。
