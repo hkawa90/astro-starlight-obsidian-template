@@ -54,7 +54,7 @@ https://hkawa90.github.io/astro-starlight-obsidian-template/
 ![](img/View-Runs.png)
 15. `Run workflow`プルダウンメニューから`Run workflow`を選択。
 ![](img/deploy-action.png)
-16. 正常すると次のような画面となります。
+16. 正常すると次のような画面となります。`Settings/Pages`ページ上部に公開されたURLが表示されます。`Visit site`をクリックすると作成されたページが確認できます。
 ![](img/Action-Completre.png)
 
 
