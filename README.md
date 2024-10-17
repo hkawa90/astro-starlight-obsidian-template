@@ -19,6 +19,8 @@ Obsidianで作成していたMarkdownをsiteで公開できるようにテンプ
 
 https://hkawa90.github.io/astro-starlight-obsidian-template/
 
+ここで使用しているObsidianのリポジトリは[hkawa90/Obsidian-Vaults-DevDoc: Obsidian Vaults](https://github.com/hkawa90/Obsidian-Vaults-DevDoc)です。
+
 # Getting Started
 
 1. Gihubのアカウントを作成(`Sign up`)してログイン(`Sign in`)する。
@@ -65,9 +67,9 @@ https://hkawa90.github.io/astro-starlight-obsidian-template/
 # Requirement
 
 - Obsidianの`vaults`のみをgithubに入れておいたもの。ここのリポジトリ名を控えておいてください。
-- favicon.svg
+- public/favicon.svg
   faviconファイルを`SVG`で用意しておきます。
-- topページとなる`index.md`ないし`index.mdx`を用意しておきます。設定でObsidianのWelcomeページを利用することができます(後述)。
+- topページとなる`src/content/docs/index.md`ないし`src/content/docs/index.mdx`を用意しておきます。設定でObsidianのWelcomeページを利用することができます(後述)。
 
 # Configuration
 
