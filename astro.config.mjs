@@ -11,7 +11,7 @@ import starlightObsidian, { obsidianSidebarGroup } from 'starlight-obsidian';
 // const titleName = import.meta.env.CONFIG_TITLE_NAME;
 const siteName = process.env.CONFIG_SITE_NAME || "";
 const baseName = process.env.CONFIG_BASE_NAME || "";
-const vaultName = process.env.CONFIG_VAULT_NAME || "VAULT";
+const vaultName = "VAULT" // process.env.CONFIG_VAULT_NAME || "VAULT";
 const titleName = process.env.CONFIG_TITLE_NAME || "TITLE";
 
 // https://astro.build/config
