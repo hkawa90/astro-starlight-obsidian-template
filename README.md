@@ -43,8 +43,6 @@ https://hkawa90.github.io/astro-starlight-obsidian-template/
 
 (2) `Name`に`TITLE`を入力して、`Value`にサイトのタイトルを入力します。
 
-~~ (3) `Name`に`VAULT`を入力して、`Value`に`MYVAULT`を入力します(将来的にはなくす方向)。 ~~
-
 ![](img/Add-Environment-variable.png)
 
 ![](img/Add-Variable.png)
