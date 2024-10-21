@@ -38,9 +38,11 @@ https://hkawa90.github.io/astro-starlight-obsidian-template/
 8. `Name`に`production`と入力して、`Configure environment`をクリック
 ![](img/Environments-Add.png)
 9. ページ下部の`Envvironment variables`で`Add environment variable`をクリックして、3つの変数を作成します。
+
 (1) `Name`に`VLT_REPOSITORY`を入力して、`Value`に`Obsidian`の`Github`リポジトリを指定します。リポジトリ名は`user-namename/repository-name`の形式で`ユーザ名`+`/`+`リポジトリ名`となります。
+
 (2) `Name`に`TITLE`を入力して、`Value`にサイトのタイトルを入力します。
-(3) `Name`に`VAULT`を入力して、`Value`に`MYVAULT`を入力します(将来的にはなくす方向)。
+
 ![](img/Add-Environment-variable.png)
 
 ![](img/Add-Variable.png)
@@ -76,8 +78,8 @@ https://hkawa90.github.io/astro-starlight-obsidian-template/
 Githubの`Environment`で変数名を設定するだけです(実例はあとで追記予定)。
 - 環境名productionの変数名 VLT_REPOSITORY
      リポジトリ名(owerner/repository形式)を設定する 例) hkawa90/Obsidian-sample-vaults
-- 環境名productionの変数名 VAULT
-      ObsidianのVault名を入力する
+- ~~環境名productionの変数名 VAULT~~
+      ~~ObsidianのVault名を入力する~~
 - 環境名productionの変数名 TITLE
 	サイトのタイトルを入力します。
 
