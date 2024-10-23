@@ -53,8 +53,8 @@ jobs:
             https://\
             ${{ github.repository_owner }}\
             .github.io/\
-            ${{ github.event.repository.name }}"
-#          CONFIG_BASE_NAME: /${{ github.event.repository.name }}
+            "
+          CONFIG_BASE_NAME: /${{ github.event.repository.name }}
           CONFIG_TITLE_NAME: ${{ vars.TITLE }}
 
 
