@@ -29,7 +29,7 @@ export default defineConfig({
 				// Generate the Obsidian vault pages.
 				starlightObsidian({
 					vault: vaultName,
-					out: noteName
+					output: noteName
 				}),
 			],
 			title: titleName,
