@@ -67,7 +67,7 @@ jobs:
           CONFIG_NOTE_NAME: ${{ steps.read_action_js.outputs['note'] }}
           
       - name: correct wikilink
-        run: find . -name "*.html" -print | xargs sed -i s@href=\"/${{ steps.read_action_js.outputs['note'] }}@href=\"/${{ github.event.repository.name }}/${{ steps.read_action_js.outputs['note'] }}@
+        run: find ./dist -name "*.html" -print | xargs sed -i s@href=\"/${{ steps.read_action_js.outputs['note'] }}@href=\"/${{ github.event.repository.name }}/${{ steps.read_action_js.outputs['note'] }}@
         
       - name: Upload Pages Artifact
         uses: actions/upload-pages-artifact@v3
