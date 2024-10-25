@@ -25,11 +25,18 @@ jobs:
       - name: Checkout your repository using git
         uses: actions/checkout@v4
         
+      - name: read-yaml-file
+        uses: pietrobolcato/action-read-yaml@1.0.0
+        id: read_action_js
+        with:
+          config: ${{ github.workspace }}/config.yaml
+          
       - name: Checkout your vault repository using git
+        if: ${{ steps.read_action_js.outputs['vault_repository'] }} != null
         uses: actions/checkout@v4
         with:
-          repository: ${{ vars.VLT_REPOSITORY }}
-          path: VAULT
+          repository: ${{ steps.read_action_js.outputs['vault_repository'] }}
+          path: ${{ steps.read_action_js.outputs['vault_directory'] }}
       
       - name: Install Node.js
         uses: actions/setup-node@v4.0.2
@@ -55,9 +62,13 @@ jobs:
             .github.io\
             "
           CONFIG_BASE_NAME: /${{ github.event.repository.name }}
-          CONFIG_TITLE_NAME: ${{ vars.TITLE }}
-
-
+          CONFIG_TITLE_NAME: ${{ steps.read_action_js.outputs['title'] }}
+          CONFIG_VAULT_NAME: ${{ steps.read_action_js.outputs['vault_directory'] }}
+          CONFIG_NOTE_NAME: ${{ steps.read_action_js.outputs['note'] }}
+          
+      - name: correct wikilink
+        run: find ./dist -name "*.html" -print | xargs sed -i s@href=\"/${{ steps.read_action_js.outputs['note'] }}@href=\"/${{ github.event.repository.name }}/${{ steps.read_action_js.outputs['note'] }}@
+        
       - name: Upload Pages Artifact
         uses: actions/upload-pages-artifact@v3
         with:

@@ -1,0 +1,8 @@
+# Site title
+title: MY TITLE
+# Obsidian note name
+note: note
+# path of VAULT
+vault_directory: VAULT
+# repository name or null
+vault_repository: hkawa90/Obsidian-Vaults-DevDoc
