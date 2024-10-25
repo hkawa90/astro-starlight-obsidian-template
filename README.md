@@ -9,7 +9,7 @@ Obsidianで作成していたMarkdownをsiteで公開できるようにテンプ
 
 - templateからリポジトリ作成して、別途用意した`Obsidian`のリポジトリからsiteをGitHub Pagesで公開できます。
 - ローカルPCで`node.js`とかプログラムのインストールが不要です。
-- GithubのEnvironmentにサイト情報を格納するようにしているため、ほほソースコードの編集作業などが不必要。
+- rootの`config.yaml`にサイト情報を格納するようにしているため、ほほソースコードの編集作業などが不必要。
 - deploy処理はGithub Actionsで実行するだけです。
 - .github/workflow/deploy.yamlを実行するだけでObsidianのVaultsを格納した別リポジトリからサイトを構築できる。サイトでは`pagefind`で検索できるようになります。
 - [HiDeoo/starlight-obsidian](https://github.com/HiDeoo/starlight-obsidian) plugin導入でほぼ`obsidian`と同様な表示となる。
@@ -37,19 +37,17 @@ https://hkawa90.github.io/astro-starlight-obsidian-template/
 ![](img/Settings-Environments-NewEnvironments.png)
 8. `Name`に`production`と入力して、`Configure environment`をクリック
 ![](img/Environments-Add.png)
-9. ページ下部の`Envvironment variables`で`Add environment variable`をクリックして、3つの変数を作成します。
-
-(1) `Name`に`VLT_REPOSITORY`を入力して、`Value`に`Obsidian`の`Github`リポジトリを指定します。リポジトリ名は`user-namename/repository-name`の形式で`ユーザ名`+`/`+`リポジトリ名`となります。
-
-(2) `Name`に`TITLE`を入力して、`Value`にサイトのタイトルを入力します。
-
-![](img/Add-Environment-variable.png)
-
-![](img/Add-Variable.png)
-
-10. すべての変数を入力した状態です。
-![](img/Added-Variables.png)
-
+9. config.yamlを編集してサイトの情報を設定します。`vault_directory`は`vault`が格納されるdirectoryとなります。`Obsidian vault`を同じリポジトリに格納した場合のpathを指定します。`vault_repository`はObsidian vaultが格納されているリポジトリを指定します。`Obsidian vault`を同じリポジトリに格納した場合は`null`を指定します。
+```yaml
+# Site title
+title: MY TITLE
+# Obsidian note name
+note: note
+# path of VAULT
+vault_directory: VAULT
+# repository name or null
+vault_repository: hkawa90/Obsidian-Vaults-DevDoc
+```
 11. `Pages`を選択します。
 ![](img/Settings-Pages.png)
 12. `Build and deployment`項目の`branch`で`None`プルダウンから`main`を選択して、`Save`ボタンをクリック
@@ -62,7 +60,7 @@ https://hkawa90.github.io/astro-starlight-obsidian-template/
 ![](img/View-Runs.png)
 15. `Run workflow`プルダウンメニューから`Run workflow`を選択。
 ![](img/deploy-action.png)
-16. 正常すると次のような画面となります。`Settings/Pages`ページ上部に公開されたURLが表示されます。`Visit site`をクリックすると作成されたページが確認できます。
+16. 正常終了すると次のような画面となります。`Settings/Pages`ページ上部に公開されたURLが表示されます。`Visit site`をクリックすると作成されたページが確認できます。
 ![](img/Action-Completre.png)
 
 
@@ -72,16 +70,9 @@ https://hkawa90.github.io/astro-starlight-obsidian-template/
 - public/favicon.svg
   faviconファイルを`SVG`で用意しておきます。
 - topページとなる`src/content/docs/index.md`ないし`src/content/docs/index.mdx`を用意しておきます。設定でObsidianのWelcomeページを利用することができます(後述)。
+- 設定ファイルの`config.yaml`
 
 # Configuration
-
-Githubの`Environment`で変数名を設定するだけです(実例はあとで追記予定)。
-- 環境名productionの変数名 VLT_REPOSITORY
-     リポジトリ名(owerner/repository形式)を設定する 例) hkawa90/Obsidian-sample-vaults
-- ~~環境名productionの変数名 VAULT~~
-      ~~ObsidianのVault名を入力する~~
-- 環境名productionの変数名 TITLE
-	サイトのタイトルを入力します。
 
 作成する`Site`のトップページを`Obsidian`のWelcomeページにする場合は、`astro.config.mjs`ファイルで
 
