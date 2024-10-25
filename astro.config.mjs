@@ -11,8 +11,9 @@ import starlightObsidian, { obsidianSidebarGroup } from 'starlight-obsidian';
 // const titleName = import.meta.env.CONFIG_TITLE_NAME;
 const siteName = process.env.CONFIG_SITE_NAME || "";
 const baseName = process.env.CONFIG_BASE_NAME || "";
-const vaultName = "VAULT" // process.env.CONFIG_VAULT_NAME || "VAULT";
+const vaultName = process.env.CONFIG_VAULT_NAME || "VAULT";
 const titleName = process.env.CONFIG_TITLE_NAME || "TITLE";
+const noteName = process.env.CONFIG_NOTE_NAME || "note";
 
 // https://astro.build/config
 export default defineConfig({
@@ -28,6 +29,7 @@ export default defineConfig({
 				// Generate the Obsidian vault pages.
 				starlightObsidian({
 					vault: vaultName,
+					out: noteName
 				}),
 			],
 			title: titleName,
